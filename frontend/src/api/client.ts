@@ -1,5 +1,7 @@
-const API_KEY = "dev-secret-key";
-const BASE = "/api/v1";
+const API_KEY = import.meta.env.VITE_API_KEY ?? "dev-secret-key";
+// On web: use relative path (proxied by Vite dev server → localhost:8000)
+// On device: set VITE_API_BASE_URL to your deployed server, e.g. https://api.yourdomain.com
+const BASE = (import.meta.env.VITE_API_BASE_URL ?? "") + "/api/v1";
 
 async function request<T>(path: string, opts: RequestInit = {}): Promise<T> {
   const res = await fetch(`${BASE}${path}`, {

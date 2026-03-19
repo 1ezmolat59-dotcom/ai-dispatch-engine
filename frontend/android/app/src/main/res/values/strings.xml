@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">AI Dispatch</string>
+    <string name="title_activity_main">AI Dispatch</string>
+    <string name="package_name">com.aidispatch.engine</string>
+    <string name="custom_url_scheme">com.aidispatch.engine</string>
+</resources>

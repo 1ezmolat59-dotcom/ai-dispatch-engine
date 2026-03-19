@@ -5,6 +5,7 @@ import {
 } from "lucide-react";
 
 import { useBoard } from "./hooks/useBoard";
+import { usePushNotifications } from "./hooks/usePushNotifications";
 import { api } from "./api/client";
 import { MetricsBar } from "./components/MetricsBar";
 import { JobCard } from "./components/JobCard";
@@ -17,6 +18,7 @@ type Tab = "board" | "jobs" | "technicians" | "assignments";
 
 export default function App() {
   const { board, status } = useBoard();
+  usePushNotifications();
   const [tab, setTab] = useState<Tab>("board");
   const [showAddJob, setShowAddJob] = useState(false);
   const [showAddTech, setShowAddTech] = useState(false);

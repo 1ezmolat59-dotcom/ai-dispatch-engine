@@ -70,10 +70,10 @@ const cssFile = outFiles.find(f => f.endsWith('.css'))
   ? stripDist(outFiles.find(f => f.endsWith('.css')))
   : null;
 
+// Use relative paths (no leading /) so Capacitor's file:// and capacitor:// schemes both work
 let html = htmlIn
-  // Replace the dev script tag (which has type="module" already) keeping only src change
-  .replace(/<script type="module" src="\/src\/main\.tsx"><\/script>/, `<script type="module" src="/${jsFile}"></script>`)
-  .replace('</head>', cssFile ? `  <link rel="stylesheet" href="/${cssFile}">\n</head>` : '</head>');
+  .replace(/<script type="module" src="\/src\/main\.tsx"><\/script>/, `<script type="module" src="${jsFile}"></script>`)
+  .replace('</head>', cssFile ? `  <link rel="stylesheet" href="${cssFile}">\n</head>` : '</head>');
 
 writeFileSync(`${OUT}/index.html`, html);
 

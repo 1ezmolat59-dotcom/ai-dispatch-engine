@@ -13,7 +13,10 @@ export function useBoard() {
   const connect = useCallback(() => {  // eslint-disable-line react-hooks/exhaustive-deps
     if (wsRef.current?.readyState === WebSocket.OPEN) return;
 
-    const ws = new WebSocket(`ws://${window.location.hostname}:8000/ws/board`);
+    // On web: connect to same host (proxied in dev, or deployed backend)
+    // On device: VITE_WS_BASE_URL should be set to e.g. ws://your-server.com
+    const wsBase = import.meta.env.VITE_WS_BASE_URL ?? `ws://${window.location.hostname}:8000`;
+    const ws = new WebSocket(`${wsBase}/ws/board`);
     wsRef.current = ws;
 
     ws.onopen = () => {
