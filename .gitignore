@@ -13,7 +13,10 @@ venv/
 .venv/
 env/
 .env
+.env.local
 *.env.local
+!.env.example
+!frontend/.env.production.example
 
 # Node / Frontend
 frontend/node_modules/

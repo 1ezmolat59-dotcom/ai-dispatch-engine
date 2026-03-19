@@ -11,9 +11,11 @@ import uuid
 from contextlib import asynccontextmanager
 from typing import Optional, Set
 
+import os
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
 
 from ..core.dispatch_engine import DispatchEngine
 from ..integrations.maps_service import MapsService
@@ -207,5 +209,24 @@ def create_app(
     async def global_exception_handler(request, exc):
         logger.error(f"Unhandled exception: {exc}", exc_info=True)
         return JSONResponse(status_code=500, content={"error": "Internal server error"})
+
+    # ─── Serve React frontend (production) ────────────────────────────────────
+    # Mount static assets first, then catch-all for SPA routing.
+    # Only active when frontend/dist/ has been built (production / Docker).
+    _dist = os.path.join(os.path.dirname(__file__), "..", "..", "frontend", "dist")
+    _dist = os.path.normpath(_dist)
+    if os.path.isdir(_dist):
+        app.mount("/assets", StaticFiles(directory=os.path.join(_dist, "assets")), name="static-assets")
+
+        @app.get("/favicon.svg", include_in_schema=False)
+        async def favicon():
+            return FileResponse(os.path.join(_dist, "favicon.svg"))
+
+        @app.get("/{full_path:path}", include_in_schema=False)
+        async def serve_spa(full_path: str):
+            """Catch-all: serve index.html so React handles client-side routing."""
+            return FileResponse(os.path.join(_dist, "index.html"))
+
+        logger.info(f"Serving frontend from {_dist}")
 
     return app
