@@ -14,8 +14,11 @@ httpx>=0.27.0
 scikit-learn>=1.4.0
 numpy>=1.26.0
 
+# ─── Static file serving (required for StaticFiles in FastAPI) ─────────────
+aiofiles>=23.0.0
+
 # ─── Async support ─────────────────────────────────────────────────────────
-asyncio-mqtt>=0.16.0    # Optional: for IoT device tracking
+# asyncio-mqtt>=0.16.0  # Optional: for IoT device tracking (uncomment if needed)
 
 # ─── Optional: load .env files ─────────────────────────────────────────────
 python-dotenv>=1.0.0
