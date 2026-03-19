@@ -31,6 +31,9 @@ RUN mkdir -p ai_dispatch/data
 
 # Use PORT env var (Railway/Render set this automatically), default 8000
 ENV PORT=8000
-EXPOSE $PORT
+EXPOSE 8000
 
-CMD uvicorn main:app --host 0.0.0.0 --port $PORT
+COPY start.sh .
+RUN chmod +x start.sh
+
+CMD ["./start.sh"]
