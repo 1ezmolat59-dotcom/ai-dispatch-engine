@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "AI Dispatch — Dev (hot reload)",
+      "runtimeExecutable": "/usr/bin/python3",
+      "runtimeArgs": ["/tmp/ai_dispatch_dev.py"],
+      "port": 8000
+    },
+    {
+      "name": "AI Dispatch — Production",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["/tmp/ai_dispatch_start.sh"],
+      "port": 8000
+    }
+  ]
+}
